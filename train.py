@@ -76,7 +76,7 @@ brats_data.print_info()  # Print dataset information
 """
 2. Create the TensorFlow model
 """
-model = unet_3d(input_dim=crop_dim, 
+model = unet_3d(input_dim=(args.tile_height, args.tile_width, args.tile_depth, args.number_input_channels),  
                 filters=args.filters,
                 number_output_classes=args.number_output_classes,
                 use_upsampling=args.use_upsampling,
@@ -88,7 +88,8 @@ model.compile(loss=dice_loss,
               metrics=[dice_coef, soft_dice_coef],
               optimizer=local_opt)
 
-checkpoint = K.callbacks.ModelCheckpoint(args.saved_model_name,
+saved_model_path = Path(args.model_dir / args.saved_model_name)          
+checkpoint = K.callbacks.ModelCheckpoint(saved_model_path,
                                          verbose=1,
                                          save_best_only=True)
 
@@ -113,7 +114,7 @@ model.fit(brats_data.get_train(), epochs=args.epochs,
 4. Load best model on validation dataset and run on the test
 dataset to show generalizability
 """
-best_model = K.models.load_model(args.saved_model_name,
+best_model = K.models.load_model(saved_model_path,
                                  custom_objects={"dice_loss": dice_loss,
                                                  "dice_coef": dice_coef,
                                                  "soft_dice_coef": soft_dice_coef})
@@ -132,7 +133,10 @@ print("Average Dice Coefficient on testing dataset = {:.4f}".format(dice_coef))
    save as a new model (with suffix "_final")
 """
 final_model_name = args.saved_model_name + "_final"
-best_model.compile(loss="binary_crossentropy", metrics=["accuracy"],
-                   optimizer="adam")
-K.models.save_model(best_model, final_model_name,
+
+# best_model.compile(loss="binary_crossentropy", metrics=["accuracy"],
+#                    optimizer="adam")
+
+final_model_path = Path(args.model_dir / final_model_name)
+K.models.save_model(best_model, final_model_path,
                     include_optimizer=False)
