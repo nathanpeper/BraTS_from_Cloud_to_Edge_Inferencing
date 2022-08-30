@@ -50,15 +50,14 @@ def dice_loss(target, prediction, axis=(1, 2, 3), smooth=0.0001):
     dice_loss = -tf.math.log(2.*numerator) + tf.math.log(denominator)
 
     return dice_loss
+                 
 
-
-
-def unet_3d(input_dim=args.CROP_DIM, 
-            filters=args.FILTERS,
-            number_output_classes=args.NUMBER_OUTPUT_CLASSES,
-            use_upsampling=args.USE_UPSAMPLING,
+def unet_3d(input_dim=(args.tile_height, args.tile_width, args.tile_depth, args.number_input_channels), 
+            filters=args.filters,
+            number_output_classes=args.number_output_classes,
+            use_upsampling=args.use_upsampling,
             concat_axis=-1, 
-            model_name=args.SAVED_MODEL_NAME):
+            model_name=args.saved_model_name):
     """
     3D U-Net
     """
