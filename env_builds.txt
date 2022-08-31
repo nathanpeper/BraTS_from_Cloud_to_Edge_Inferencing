@@ -1,0 +1,71 @@
+conda create -c anaconda -n jupyter_launch pip python=3.7 psutil jupyterlab jupyterlab_widgets ipykernel ipympl
+conda create -c anaconda -n explore_data pip python=3.7 tensorflow tqdm psutil matplotlib ipywidgets ipykernel ipympl
+conda create -c anaconda -n data_pipeline pip python=3.7 tensorflow tqdm psutil matplotlib ipywidgets ipykernel ipympl
+conda create -c anaconda -n train_model pip python=3.7 tensorflow tqdm psutil matplotlib ipywidgets ipykernel ipympl
+conda create -c anaconda -n optimize_model pip python=3.7 tensorflow tqdm psutil matplotlib ipywidgets ipykernel ipympl
+conda create -c anaconda -n nncf_model pip python=3.7 jupyterlab tensorflow tqdm psutil matplotlib ipywidgets ipykernel ipympl
+conda create -c anaconda -n results_comp pip python=3.7 tensorflow tqdm psutil matplotlib ipywidgets ipykernel ipympl
+
+
+
+jupyter-lab --no-browser
+
+
+conda activate jupyter_launch
+pip install --upgrade pip
+ipython kernel install --user --name=jupyter_launch
+conda deactivate
+
+
+conda activate explore_data
+pip install --upgrade pip
+pip install nibabel
+ipython kernel install --user --name=explore_data
+conda deactivate
+
+
+conda activate data_pipeline
+pip install --upgrade pip
+pip install nibabel
+ipython kernel install --user --name=data_pipeline
+conda deactivate
+
+
+conda activate train_model
+pip install --upgrade pip
+pip install nibabel
+ipython kernel install --user --name=train_model
+conda deactivate
+
+
+conda activate optimize_model
+pip install --upgrade pip
+pip install nibabel
+pip install openvino-dev[tensorflow2]
+ipython kernel install --user --name=optimize_model
+conda deactivate
+
+Had to run this
+apt-get update && apt-get install libgl1
+
+
+
+conda activate nncf_model
+pip install --upgrade pip
+pip install nibabel
+pip install openvino-dev[tensorflow2]
+pip install nncf
+ipython kernel install --user --name=nncf_model
+conda deactivate
+
+
+
+
+
+conda activate results_comp
+pip install --upgrade pip
+pip install nibabel
+ipython kernel install --user --name=results_comp
+conda deactivate
+
+
