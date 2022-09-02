@@ -19,6 +19,7 @@ conda deactivate
 
 conda activate explore_data
 pip install --upgrade pip
+pip install gdown
 pip install nibabel
 ipython kernel install --user --name=explore_data
 conda deactivate

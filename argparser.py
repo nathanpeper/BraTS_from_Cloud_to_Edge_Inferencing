@@ -70,7 +70,7 @@ parser.add_argument("--filters",
                     help="Number of filters in the first convolutional layer")
 parser.add_argument("--epochs",
                     type=int,
-                    default=settings.EPOCHS,
+                    default=settings.NUM_EPOCHS,
                     help="Number of epochs")
 parser.add_argument("--print_model",
                     action="store_true",
@@ -90,4 +90,4 @@ parser.add_argument("--random_seed",
                     default=settings.RANDOM_SEED,
                     help="Random seed for determinism")
 
-args = parser.parse_args()
+args = parser.parse_args([])

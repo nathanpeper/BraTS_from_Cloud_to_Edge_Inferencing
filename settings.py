@@ -21,7 +21,7 @@ CROP_DIM = (144,144,144,1)
 NUMBER_OUTPUT_CLASSES=1
 
 
-MODEL_DIR = Path("/home/ubuntu/unet/3D/models")
+MODEL_DIR = "/home/ubuntu/unet/3D/models"
 SAVED_MODEL_NAME="3d_unet_decathlon"
 
 FILTERS=16
@@ -31,7 +31,7 @@ PRINT_MODEL=False
 USE_UPSAMPLING=False
 
 
-OUTPUT_DIR = Path("/home/ubuntu/unet/3D/models/openvino")
+OV_OUTPUT_DIR = "/home/ubuntu/unet/3D/models/openvino"
 IR_MODEL_PRECISION = "FP32"
 
 

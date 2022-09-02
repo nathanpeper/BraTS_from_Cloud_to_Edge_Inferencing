@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import tensorflow as tf
 import numpy as np
+from pathlib import Path
+
 from argparser import args
 
 import nibabel as nib
@@ -149,7 +151,7 @@ class DatasetGenerator:
 
         return img[tuple(slices)], msk[tuple(slices)]
 
-    def augment_data(self, img, msk, crop_dim):
+    def augment_data(self, img, msk):
         """
         Data augmentation
         Flip image and mask. Rotate image and mask.
@@ -222,7 +224,7 @@ class DatasetGenerator:
 
         # Randomly rotate
         if randomize:
-            img, msk = self.augment_data(img, msk, crop_dim)
+            img, msk = self.augment_data(img, msk)
 
         return img, msk
 
@@ -328,13 +330,13 @@ class DatasetGenerator:
                               num_parallel_calls=tf.data.AUTOTUNE)
 
         ds_train = ds_train.repeat()
-        ds_train = ds_train.batch(self.batch_size)
+        ds_train = ds_train.batch(self.batch_size_train)
         ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
 
-        ds_val = ds_val.batch(batch_size_val)
+        ds_val = ds_val.batch(self.batch_size_validate)
         ds_val = ds_val.prefetch(tf.data.AUTOTUNE)
 
-        ds_test = ds_test.batch(batch_size_test)
+        ds_test = ds_test.batch(self.batch_size_test)
         ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
 
         return ds_train, ds_val, ds_test
